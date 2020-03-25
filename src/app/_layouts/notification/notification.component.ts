@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NotificationService} from '../../_core/services/notification.service';
-import * as $ from '../../../assets/vendor_components/jquery-3.2.1/dist/jquery.min.js';
+declare var $: any;
 
 @Component({
   selector: 'app-notification',
