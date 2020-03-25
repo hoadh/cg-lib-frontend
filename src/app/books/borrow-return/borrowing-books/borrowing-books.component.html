@@ -1,0 +1,117 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-xl-12 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Danh sách mượn</h4>
+      <div class="box-controls pull-right"></div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th>Sách</th>
+            <th>Người mượn</th>
+            <th>Ngày mượn</th>
+            <th>Ngày trả (dự kiến)</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let borrowingBook of borrowingBooks; index as idx">
+            <td>{{ borrowingBook.book.title }}</td>
+            <td><p *ngIf="borrowingBook.customer.name">{{ borrowingBook.customer.name }}</p></td>
+            <td><p *ngIf="borrowingBook.borrow_day">{{ borrowingBook.borrow_day }}</p></td>
+            <td><p *ngIf="borrowingBook.pay_day">{{ borrowingBook.pay_day }}</p></td>
+            <td style="text-align: right;">
+              <button
+                type="button"
+                class="btn btn-default"
+                data-toggle="modal"
+                data-target="#modal-default"
+                (click)="setBorrowingIdForReturn(borrowingBook.id, borrowingBook.book.status_id)"
+              >
+                Trả sách
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+
+<div class="col-lg-2 col-12">
+  <div class="modal modal-default fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Xác nhận</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form" #returnForm="ngForm">
+            <div class="box-body">
+              <div class="row">
+              <div class="col-12">
+                <div *ngIf="bookStatus" class="form-group">
+                  <label for="status">Tình trạng</label>
+                  <select
+                    id="status"
+                    class="form-control"
+                    name="statusId"
+                    [(ngModel)]="borrowingBookStatusId"
+                  >
+                    <option
+                      *ngFor="let status of bookStatus"
+                      value="{{ status['id'] }}"
+                      >{{ status["title"] }}</option
+                    >
+                  </select>
+                </div>
+
+                <!-- <div class="form-group">
+                  <label for="return_date">Ngày trả</label>
+                  <div class="input-group mb-3">
+                  <input class="form-control" type="date" id="return_date" name="returnDate" [ngModel]="defaultDate">
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default"
+            data-dismiss="modal"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary float-right"
+            (click)="returnBook(returnForm)"
+            data-dismiss="modal"
+          >
+            Lưu
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>

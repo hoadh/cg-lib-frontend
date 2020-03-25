@@ -1,0 +1,105 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="row">
+  <div
+    class="col-xl-4 col-lg-6"
+    *ngFor="let library of libraries; index as idx"
+  >
+    <div class="box">
+      <div
+        class="box-body bg-img py-70"
+        [style.backgroundImage]="'url('+ baseUrl + library['image'] +')'"
+        data-overlay="5"
+      >
+        <blockquote class="blockquote blockquote-inverse no-border no-margin">
+          <p class="font-size-22">{{ library["name"] }}</p>
+          <footer>{{ library["address"] }}</footer>
+          <footer>{{ library["desc"] }}</footer>
+        </blockquote>
+      </div>
+      <div class="box-body">
+        <!-- <h4>volutpat metus commodo.</h4> -->
+        <div class="flexbox">
+          <div class="time"></div>
+          <ul class="flexbox" style="text-align: right;">
+            <!-- <li><a href="#">845 <i class="fa fa-comment-o"></i></a></li> -->
+            <li>
+              <button
+                type="button"
+                class="btn btn-default"
+                (click)="setUpdateIdLibrary(library['id'], idx)"
+              >
+                <i class="ti ti-pencil"></i>
+              </button>
+              &nbsp;&nbsp;
+              <button
+                type="button"
+                class="btn btn-default"
+                data-toggle="modal"
+                data-target="#modal-danger"
+                (click)="setDeleteIdLibrary(library['id'])"
+              >
+                <i class="ti ti-close"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="box-footer p-0">
+        <div class="media-list media-list-hover">
+          <a href="#" class="media media-single">
+            <div>
+              <h5 class="mb-0">{{ library["manager"] }}</h5>
+              <p class="text-fade mb-0">{{ library["manager_phone"] }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-2 col-12">
+  <div class="modal modal-danger fade" id="modal-danger">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Xác nhận</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Xóa thư viện này?&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline btn-white"
+            data-dismiss="modal"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline btn-white float-right"
+            (click)="deleteLibrary()"
+            data-dismiss="modal"
+          >
+            Đồng ý
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>

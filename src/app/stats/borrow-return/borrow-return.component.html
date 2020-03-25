@@ -1,0 +1,98 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-xl-12 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Thống kê mượn/trả</h4>
+      <div class="box-controls pull-right"></div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="table-responsive">
+        <form #filterForm="ngForm">
+          <table class="table table-hover">
+            <tr> 
+              <th>
+                <div>Từ ngày</div><br/>
+                <input *ngIf="firstDateOfMonth"
+                  class="form-control"
+                  type="date"
+                  id="firstDateOfMonth"
+                  placeholder="YYYY-MM-DD"
+                  name="firstDateOfMonth"
+                  [(ngModel)]="firstDateOfMonth"
+                  (change)="getStatistic()">
+              </th>
+              <th>
+                <div>Tới ngày</div><br/>
+                <input *ngIf="lastDateOfMonth"
+                  class="form-control"
+                  type="date"
+                  id="lastDateOfMonth"
+                  placeholder="YYYY-MM-DD"
+                  name="lastDateOfMonth"
+                  [(ngModel)]="lastDateOfMonth"
+                  (change)="getStatistic()">
+              </th>
+              <th>
+                <div>Thư viện</div><br/>
+                <div *ngIf="libraries" class="form-group">
+                  <select
+                    id="libraries"
+                    class="form-control"
+                    name="libraryId"
+                    [(ngModel)]="libraryId"
+                    (change)="getStatistic()"
+                  >
+                    <option value="0" selected="true">Tất cả thư viện</option>
+                    <option
+                      *ngFor="let library of libraries"
+                      value="{{ library['id'] }}"
+                      >{{ library["name"] }}</option>
+                  </select>
+                </div>
+              </th>
+              <th>
+                <div>Danh mục</div><br/>
+                <div *ngIf="categories" class="form-group">
+                  <select
+                    id="categories"
+                    class="form-control" 
+                    name="categoryId"
+                    [(ngModel)]="categoryId"
+                    (change)="getStatistic()"
+                  >
+                    <option value="0" selected="true">Tất cả danh mục</option>
+                    <option
+                      *ngFor="let category of categories"
+                      value="{{ category['id'] }}"
+                      >{{ category["name"] }}</option>
+                  </select>
+                </div>
+              </th>
+            </tr>
+          </table>
+        </form>
+        
+        <table class="table table-hover">
+          <tr>
+            <th>Thư viện</th>
+            <th>Danh mục</th>
+            <th style="text-align: center;">Lượt mượn</th>
+            <th style="text-align: center;">Lượt trả</th>
+          </tr>
+          <tr *ngFor="let statisticResult of statisticResults; index as idx">
+            <td>{{ statisticResult.library_name }}</td>
+            <td>{{ statisticResult.category_name }}</td>
+            <td style="text-align: center;">{{ statisticResult.borrowed_count }}</td>
+            <td style="text-align: center;">{{ statisticResult.returned_count }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>

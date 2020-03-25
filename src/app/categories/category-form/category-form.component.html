@@ -1,0 +1,41 @@
+<div class="col-lg-6 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Cập nhật danh mục sách</h4>
+      <ul class="box-controls pull-right">
+        <li><a class="box-btn-fullscreen" href="#"></a></li>
+      </ul>
+    </div>
+    <!-- /.box-header -->
+    <form class="form" #myForm="ngForm">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="name">Tên danh mục</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ti-user"></i></span>
+            </div>
+            <input
+              id="name"
+              type="text"
+              class="form-control"
+              name="name"
+              [(ngModel)]="category.name"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button
+          type="submit"
+          class="btn btn-primary btn-outline"
+          (click)="submitHandler(myForm)"
+        >
+          <i class="ti-save-alt"></i> Lưu danh mục
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- /.box -->
+</div>

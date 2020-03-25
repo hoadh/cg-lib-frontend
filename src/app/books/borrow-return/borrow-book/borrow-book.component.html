@@ -1,0 +1,330 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Mượn sách</h4>
+      <ul class="box-controls pull-right">
+        <li><a class="box-btn-fullscreen" href="#"></a></li>
+      </ul>
+    </div>
+    
+    <div class="box-body">
+      <h4 class="box-title text-info">Các bước cho mượn sách</h4>
+      <div>1. Nếu là khách hàng mới: vào "Quản lý khách hàng" -> "Thêm khách hàng".</div><br/>
+      <div>2. "Tìm kiếm khách hàng" tại "Người mượn".</div><br/>
+      <div>3. Nhấn "Thêm sách" và chọn các cuốn sách tại "Sách". Nhấn "Đóng".</div><br/>
+      <div>4. Điều chỉnh "tình trạng" và "ngày trả (dự kiến)" nếu cần thiết.</div><br/>
+      <div>5. Nhấn "Lưu".</div><br/>
+    </div>
+    <!-- /.box-header -->
+    <form class="form" #myForm="ngForm">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-6">
+
+            <div class="row">
+              <div class="col-6">
+                <h4 class="box-title text-info"><i class="ti-user mr-15"></i>Người mượn</h4>
+              </div>
+              <div class="col-6" style="text-align: right;">
+                <button type="button" class="btn btn-info btn-sm right" data-toggle="modal" data-target="#modal-customers-right">Tìm kiếm khách hàng</button>
+              </div>
+            </div>
+            <hr class="my-15">
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Họ và tên</label>
+                  <input type="text" class="form-control" name="fullname" [(ngModel)]="selectedCustomer.name" readonly/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Mã số</label>
+                  <input type="text" class="form-control" name="code"  [(ngModel)]="selectedCustomer.code" readonly/>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Trường</label>
+                  <input type="text" class="form-control" name="group"  [(ngModel)]="selectedCustomer.group" readonly/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Địa chỉ</label>
+                  <input type="text" class="form-control" name="address"  [(ngModel)]="selectedCustomer.address" readonly/>
+                </div>
+              </div>
+            </div>
+
+          <div class="form-group">
+					  <label for="return_date">Ngày trả (dự kiến)</label>
+					  <div class="input-group mb-3">
+						<input class="form-control" type="date" value="2011-08-19" id="return_date" name="returnDate" [(ngModel)]="defaultDate">
+					  </div>
+          </div>
+          
+          </div>
+          <div class="col-6">
+
+            <div class="row">
+              <div class="col-6">
+                <h4 class="box-title text-info"><i class="ti-book mr-15"></i>Sách</h4>
+              </div>
+              <div class="col-6" style="text-align: right;">
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-right">Thêm sách</button>
+              </div>
+            </div>
+
+            <hr class="my-15">
+
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Tên sách</th>
+                    <th>Tình trạng</th>
+                    <th style="text-align: right;">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let book of borrowBooks; index as idx">
+                    <td>{{ book.title }}</td>
+                    <td>
+                      <div *ngIf="bookStatus" class="form-group">
+                        <select
+                          id="status"
+                          class="form-control"
+                          [value]="book.status_id"
+                          (click)="updateBorrowBookStatus($event.target.value, idx)"
+                        >
+                          <option
+                            *ngFor="let status of bookStatus"
+                            value="{{ status['id'] }}"
+                            >{{ status["title"] }}</option
+                          >
+                        </select>
+                      </div>
+                    </td>
+                    <td style="text-align: right;">
+                      <button
+                        type="button"
+                        class="btn btn-link btn-sm"
+                        (click)="removeBorrowBook($event, idx)"
+                      >
+                        <i class="ti ti-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <!-- <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="saveBorrow(myForm)"
+          [disabled]="selectedCustomer.id === undefined || borrowBooks.length <= 0"
+        >
+          <i class="ti-save-alt"></i> Lưu
+        </button> -->
+
+        <button
+          type="button" class="btn btn-default btn-sm"
+          data-toggle="modal" data-target="#modal-fill"
+          [disabled]="selectedCustomer.id === undefined || borrowBooks.length <= 0">
+          Xem trước
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- /.box -->
+</div>
+
+
+<!-- Modal -->
+<div class="modal modal-right fade" id="modal-right" tabindex="-1">
+  <div class="modal-dialog" style="width: 50%;">
+  <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title">Tìm sách</h5>
+    <button type="button" class="close" data-dismiss="modal">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" style="overflow: scroll;">
+
+         <div class="box">
+            <div class="box-header with-border bg-light">
+              <input #filterBook
+              width="100%" type="search"
+              class="form-control form-control-sm" aria-controls="filterCustomer"
+              placeholder="Nhập tựa sách hoặc barcode để tìm"
+              (keyup)="filterBookKeyUp(filterBook.value)">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="form-group">
+
+                  <div class="checkbox" *ngFor="let book of filterBookList; index as idx">
+                    <input type="checkbox" id="book_id-{{book.id}}" (change)="addBorrowBook($event, idx)">
+                    <label for="book_id-{{book.id}}">{{ book.title }} - {{ book.isbn }}</label>
+                  </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+    </div>
+    <div class="modal-footer modal-footer-uniform">
+    <button type="button" class="btn btn-bold btn-secondary" data-dismiss="modal">Đóng</button>
+
+    </div>
+  </div>
+  </div>
+</div>
+<!-- /.modal -->
+
+
+
+<!-- Modal -->
+<div class="modal modal-right fade" id="modal-customers-right" tabindex="-1">
+  <div class="modal-dialog" style="width: 50%;">
+  <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title">Tìm khách hàng</h5>
+    <button type="button" class="close" data-dismiss="modal">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" style="overflow: scroll;">
+
+         <div class="box">
+            <div class="box-header with-border bg-light">
+              <input width="100%" type="search" class="form-control form-control-sm" placeholder="Nhập tên hoặc mã để tìm" aria-controls="filterCustomer"
+              #filterCustomer (keyup)="filterCustomerKeyUp(filterCustomer.value)">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="form-group">
+
+                  <div class="col-12" *ngFor="let customer of filterCustomersList; index as idx">
+                    <div class="media align-items-center bg-white mb-30 pull-up">
+                      <span class="avatar avatar-sm bg-primary">
+                        <img class="avatar" src="/assets/images/avatar3.png" alt="...">
+                      </span>
+                      <div class="media-body">
+                        <p>{{ customer.name }} - {{customer.code}}</p>
+                        <time datetime="2017-07-14 20:00">{{customer.group}} / {{customer.address}}</time>
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-block btn-primary btn-sm" data-dismiss="modal" (click)="selectCustomer($event, idx)">Chọn</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+    </div>
+    <div class="modal-footer modal-footer-uniform">
+    <button type="button" class="btn btn-bold btn-secondary" data-dismiss="modal">Đóng</button>
+
+    </div>
+  </div>
+  </div>
+</div>
+<!-- /.modal -->
+
+<!-- Modal -->
+<div class="modal modal-fill fade" data-backdrop="false" id="modal-fill" tabindex="-1">
+  <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+    <!-- <h5 class="modal-title">Modal title</h5> -->
+    <button type="button" class="close" data-dismiss="modal">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" id="print-paper">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="page-header">
+            <h2 class="d-inline"><span class="font-size-30">Phiếu Mượn Sách</span></h2>
+            <div class="pull-right text-right">
+              <h3>Ngày {{ todayDate }}</h3>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>TT</th>
+                <th scope="col">Tựa sách</th>
+                <th scope="col">Barcode</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of borrowBooks; index as idx">
+                <td scope="row">{{ idx+1 }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.isbn }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 text-right">
+          <p class="lead"><b>Ngày trả dự kiến </b><span class="text-danger"> {{ defaultDate }} </span></p>
+          Ký tên
+        </div>
+      </div>
+    
+    <br><br><br><br><br><br>
+    </div>
+    <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-bold btn-primary float-right">In</button>
+    <button type="button" class="btn btn-bold btn-primary float-right">Lưu</button> -->
+    <button
+          class="btn btn-success" type="button"
+          data-dismiss="modal"
+          (click)="saveBorrow(myForm)"
+          [disabled]="selectedCustomer.id === undefined || borrowBooks.length <= 0"
+    > <span><i class="fa fa-print"></i> Lưu phiếu</span> </button>
+
+    <button class="btn btn-warning" type="button" (click)="printComponent('print-paper')"> <span><i class="fa fa-print"></i> In phiếu</span> </button>
+
+    <button type="button" class="btn btn-bold btn-secondary float-right" data-dismiss="modal">Không lưu</button>
+    </div>
+  </div>
+  </div>
+</div>
+<!-- /.modal -->

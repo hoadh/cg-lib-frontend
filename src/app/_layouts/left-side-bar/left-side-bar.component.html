@@ -1,0 +1,25 @@
+
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar-->
+      <section class="sidebar">
+
+        <!-- sidebar menu-->
+        <ul class="sidebar-menu" data-widget="tree" *ngFor="let category of navigation">
+
+          <li class="treeview" routerLinkActive="menu-open">
+              <a href="#">
+                <i [ngClass]="category.icon"></i>
+                <span>{{category.title}}</span>
+
+                <span class="pull-right-container">
+                  <i class="fa fa-caret-down pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li *ngFor="let link of category['items']" routerLinkActive="active"><a [routerLink]="link.routeLink"><i class="fa fa-circle-thin"></i>{{link.title}}</a></li>
+              </ul>
+          </li>
+        </ul>
+      </section>
+    </aside>

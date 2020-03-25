@@ -1,0 +1,5 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<app-user-form [user]="user" [libraries]="libraries" (formSubmit)="formSubmit($event)" (formError)="formError($event)"></app-user-form>

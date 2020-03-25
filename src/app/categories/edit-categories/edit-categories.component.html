@@ -1,0 +1,8 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<app-category-form
+  [category]="category"
+  (formSubmit)="formSubmit($event)"
+></app-category-form>

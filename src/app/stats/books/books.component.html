@@ -1,0 +1,135 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-xl-12 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Thống kê sách</h4>
+      <div class="box-controls pull-right"></div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th>
+              <div *ngIf="libraries" class="form-group">
+                <select
+                  id="libraries"
+                  class="form-control"
+                  name="libraryId"
+                  [(ngModel)]="libraryId"
+                >
+                  <option value="0" selected="select">Tất cả thư viện</option>
+                  <option
+                    *ngFor="let library of libraries"
+                    value="{{ library['id'] }}"
+                    >{{ library["name"] }}</option
+                  >
+                </select>
+              </div>
+            </th>
+            <th>
+              <div *ngIf="categories" class="form-group">
+                <select
+                  id="categories"
+                  class="form-control" 
+                  name="categoryId"
+                  [(ngModel)]="categoryId"
+                >
+                  <option value="0" selected="select">Tất cả danh mục</option>
+                  <option
+                    *ngFor="let category of categories"
+                    value="{{ category['id'] }}"
+                    >{{ category["name"] }}</option
+                  >
+                </select>
+              </div>
+            </th>
+            <th>
+              <div *ngIf="bookStatus" class="form-group">
+                <select
+                  id="status"
+                  class="form-control"
+                  (click)="updateBorrowBookStatus($event.target.value, 0)"
+                  [(ngModel)]="statusId"
+                >
+                  <option value="0">Tất cả trạng thái</option>
+                  <option
+                    *ngFor="let status of bookStatus"
+                    value="{{ status['id'] }}"
+                    >{{ status["title"] }}</option
+                  >
+                </select>
+              </div>
+            </th>
+            <th>
+              <button type="button" class="btn btn-primary" (click)="getList()">Cập nhật</button>
+            </th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>Thư viện</th>
+            <th>Tựa sách</th>
+            <th>Danh mục</th>
+            <th>Tình trạng</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let book of books; index as idx">
+            <td>{{ book.library.name }}</td>
+            <td>{{ book.title }}</td>
+            <td><p *ngIf="book.category">{{ book.category.name }}</p></td>
+            <td><p *ngIf="book.status_id">{{ getStatusById(book.status_id).title }}</p></td>
+            <td style="text-align: right;">
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+
+<div class="col-lg-2 col-12">
+  <div class="modal modal-danger fade" id="modal-danger">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Xác nhận</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Xóa sách này?&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline btn-white"
+            data-dismiss="modal"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline btn-white float-right"
+            data-dismiss="modal"
+          >
+            Đồng ý
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>

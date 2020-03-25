@@ -1,0 +1,63 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-lg-6 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Nhập sách từ Excel</h4>
+      <ul class="box-controls pull-right">
+        <li><a class="box-btn-fullscreen" href="#"></a></li>
+      </ul>
+    </div>
+
+    <div class="box-body">
+      <div class="row">
+
+        <div class="col-12">
+          <div class="ribbon-wrapper">
+            <div class="ribbon bg-primary mb-30">Bước 1</div>
+            <p class="ribbon-content">
+              Tải file Excel mẫu từ đường dẫn sau: <a [href]="downloadUrl">Tải file mẫu</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="ribbon-wrapper">
+            <div class="ribbon bg-primary mb-30">Bước 2</div>
+            <p class="ribbon-content">
+              Thay đổi nội dung file Excel mẫu. Điền các thông tin cần thiết vào file.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-12">
+              <div class="ribbon-wrapper">
+                <div class="ribbon bg-primary mb-30">Bước 3</div>
+                <div class="ribbon-content">
+
+                  <p>Chọn file đã có đầy đủ thông tin sách cần nhập. Sau đó click vào nút "Nhập file"</p> 
+                  <form class="form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+                  <div class="box-body">
+
+                    <div class="form-group">
+                      <label for="file">Chọn file (Excel)</label>
+                      <label class="file">
+                        <input id="file" type="file" #fileupload [(ngModel)]="myFile" name="myFile" (change)="fileEvent($event)"/>
+                      </label>
+                      
+                    </div>
+                  
+                  </div> <!-- /.box-body -->
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-success"><i class="ti-save-alt"></i>Nhập file</button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

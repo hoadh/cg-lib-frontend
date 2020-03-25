@@ -1,0 +1,23 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-lg-6 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Thêm thư viện</h4>
+    </div>
+    <!-- /.box-header -->
+    <div class="form-group">
+      <label for="file">Choose File</label>
+      <input
+        type="file"
+        id="file"
+        (change)="handleFileInput($event.target.files)"
+      />
+    </div>
+
+    <button type="button" (click)="upload()">Upload</button>
+  </div>
+  <!-- /.box -->
+</div>

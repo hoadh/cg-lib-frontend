@@ -1,0 +1,49 @@
+<body class="hold-transition bg-light">
+	<div class="container h-p100">
+		<div class="row align-items-center justify-content-md-center h-p100">
+
+			<div class="col-lg-5 col-md-8 col-12">
+        <app-message [isError]="isError" [message]="message"></app-message>
+
+				<div class="p-40 bg-white content-bottom">
+					<form #myForm="ngForm">
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-info border-info"><i class="ti-user"></i></span>
+								</div>
+								<input type="text" class="form-control" placeholder="Tên đăng nhập"  (keypress)="resetMessageStatus()" name="username" ngModel required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-info border-info"><i class="ti-lock"></i></span>
+								</div>
+								<input type="password" class="form-control" placeholder="Mật khẩu"  (keypress)="resetMessageStatus()" name="password" ngModel required>
+							</div>
+						</div>
+						  <div class="row">
+							<!-- /.col -->
+							<div class="col-6">
+							 <div class="fog-pwd text-right">
+								<!-- <a href="javascript:void(0)"><i class="ion ion-locked"></i> Quên mật khẩu?</a><br> -->
+							  </div>
+							</div>
+							<!-- /.col -->
+							<div class="col-12">
+							  <button type="submit" class="btn btn-info mt-10" (click)="login(myForm)">ĐĂNG NHẬP</button>
+							</div>
+							<!-- /.col -->
+						  </div>
+					</form>
+					<!-- <div class="mt-20">
+						<p class="mb-0">Don't have an account? <a href="auth-register.html" class="text-info ml-5">Sign Up</a></p>
+					</div> -->
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</body>

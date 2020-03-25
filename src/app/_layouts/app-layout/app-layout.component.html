@@ -1,0 +1,25 @@
+<body class="hold-transition skin-black sidebar-mini">
+  <div class="wrapper">
+    <app-notification></app-notification>
+    <app-main-header></app-main-header>
+    <app-left-side-bar></app-left-side-bar>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      <!-- Main content -->
+      <section class="content">
+        <router-outlet></router-outlet>
+      </section>
+      <!-- /.content -->
+    </div>
+
+    <app-main-footer></app-main-footer>
+
+    <app-control-sidebar></app-control-sidebar>
+
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+
+  </div>
+</body>

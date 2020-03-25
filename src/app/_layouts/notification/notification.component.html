@@ -1,0 +1,29 @@
+<div class="myadmin-alert myadmin-alert-icon myadmin-alert-click {{type}} myadmin-alert-bottom alertbottom">
+  <i *ngIf="icon" class="{{icon}}"></i>
+  <h4 *ngIf="title">{{title}}</h4>
+  {{ message }}
+  <a href="#" class="closed">&times;</a>
+</div>
+
+
+
+<div class="modal modal-warning fade" id="modal-warning">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="title" class="modal-title">{{title}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-white" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline btn-white float-right">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

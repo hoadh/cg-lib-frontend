@@ -1,0 +1,99 @@
+<div class="col-lg-6 col-12">
+  <app-message [isError]="isError" [message]="message"></app-message>
+</div>
+
+<div class="col-xl-12 col-12">
+  <div class="box">
+    <div class="box-header with-border bg-light">
+      <h4 class="box-title">Danh mục khách hàng</h4>
+      <div class="box-controls pull-right"></div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th>Họ tên</th>
+            <th>Công việc</th>
+            <th>Ngày sinh</th>
+            <th>Mã số</th>
+            <th>Trường/Lớp</th>
+            <th>Địa chỉ</th>
+            <th>Thao tác</th>
+          </tr>
+          <tr *ngFor="let customer of listCustomers; index as idx">
+            <td>{{ customer["name"] }}</td>
+            <td>{{ getRoleById(customer["role"]).title }}</td>
+            <td>{{ customer["birthday"] }}</td>
+            <td>{{ customer["code"] }}</td>
+            <td>{{ customer["group"] }}</td>
+            <td>{{ customer["address"] }}</td>
+            <td><!-- <td style="text-align: right;"> -->
+              <!-- <button
+                type="button"
+                class="btn btn-default"
+              >
+                <i class="ti ti-pencil"></i>
+              </button>
+              &nbsp;&nbsp; -->
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-toggle="modal"
+                data-target="#modal-danger"
+                (click)="setDeleteIdCustomer(customer['id'])"
+              >
+                <i class="ti ti-close"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+
+<div class="col-lg-2 col-12">
+  <div class="modal modal-danger fade" id="modal-danger">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Xác nhận</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Xóa khách hàng này?&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline btn-white"
+            data-dismiss="modal"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline btn-white float-right"
+            data-dismiss="modal"
+            (click)="delete()"
+          >
+            Đồng ý
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
